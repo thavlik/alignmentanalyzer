@@ -73,6 +73,7 @@ func (s *Server) ListenAndServe(
 	s.log.Info(
 		"http server listening forever",
 		zap.Int("port", httpPort),
+		zap.String("corsHeader", s.corsHeader),
 	)
 
 	return srv.ListenAndServe()

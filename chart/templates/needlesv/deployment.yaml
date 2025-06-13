@@ -41,7 +41,7 @@ spec:
       {{- end }}
         env:
         - name: CORS_HEADER
-          value: "{{ .Values.corsHeader }}"
+          value: {{ quote .Values.corsHeader }}
         - name: LOG_LEVEL
           value: {{ .Values.needlesv.logLevel }}
         readinessProbe:
