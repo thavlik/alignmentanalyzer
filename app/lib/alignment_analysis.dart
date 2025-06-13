@@ -85,7 +85,6 @@ class _AlignmentAnalysisState extends State<AlignmentAnalysis> {
               ),
             );
         }
-        ;
       },
     );
   }
@@ -98,33 +97,30 @@ class OverlapData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //color: Colors.red,
-      child: Row(
-          children: data.split('').map((c) {
-        return Container(
-          width: 18.5,
-          height: 12,
-          child: Center(
-            child: c == ' '
-                ? Container()
-                : c == '|'
-                    ? Container(
-                        color: Colors.white,
-                        width: 1,
-                        height: 16,
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white.withAlpha(128),
-                          borderRadius: BorderRadius.circular(1.5),
-                        ),
-                        width: 3,
-                        height: 3,
+    return Row(
+        children: data.split('').map((c) {
+      return SizedBox(
+        width: 18.5,
+        height: 12,
+        child: Center(
+          child: c == ' '
+              ? Container()
+              : c == '|'
+                  ? Container(
+                      color: Colors.white,
+                      width: 1,
+                      height: 16,
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withAlpha(128),
+                        borderRadius: BorderRadius.circular(1.5),
                       ),
-          ),
-        );
-      }).toList()),
-    );
+                      width: 3,
+                      height: 3,
+                    ),
+        ),
+      );
+    }).toList());
   }
 }

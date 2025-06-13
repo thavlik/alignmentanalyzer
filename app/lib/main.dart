@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oligotool/alignment_analysis.dart';
 import 'package:oligotool/alignment_view.dart';
-import 'package:oligotool/seq_alignment.dart' hide colorForBase;
 import 'bioutil.dart';
 
 void main() {

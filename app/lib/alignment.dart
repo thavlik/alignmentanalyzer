@@ -8,7 +8,8 @@ part 'alignment.g.dart';
 @riverpod
 Future<NeedleResult> runNeedle(Ref ref, String a, String b) async {
   final resp = await http.post(
-    Uri.parse('http://localhost:8080/align'),
+    //Uri.parse('http://localhost:8080/align'),
+    Uri.parse('https://api.beebs.dev/align'),
     headers: {'Content-Type': 'application/json'},
     encoding: utf8,
     body: jsonEncode({
