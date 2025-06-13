@@ -1,0 +1,25 @@
+imagePullSecrets: []
+
+# Access-Control-Allow-Origin value, e.g. https://app.mydomain.com
+# This is used by browsers to ensure a backend resource is not
+# accessed by a malicious domain. It is a strict and important check
+# that should not be skipped in production. Leaving the default
+# value effectively opens an attack surface well known to hackers. 
+corsHeader: "*"
+
+prometheus:
+  enabled: false
+
+app:
+  image: thavlik/alignmentanalyzer:latest
+  imagePullPolicy: Always
+  logLevel: debug
+  replicas: 1
+  resources: {}
+
+needlesv:
+  image: thavlik/needlesv:latest
+  imagePullPolicy: Always
+  logLevel: debug
+  replicas: 1
+  resources: {}

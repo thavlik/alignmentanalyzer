@@ -1,0 +1,9 @@
+Some high level design notes:
+
+1. Possible functionality
+The list of prospective features is the summation of the different tools we used prior to entering the lab. For example, there's no reason why we couldn't do a BLAST search within the app.
+
+2. Managing data sources
+Suppose we want to implement BLAST searches within the app. This would be useful for the Linking PCR tool because it could automatically calculate the delta G for undesired interactions and re-design the oligos if a significant overlap is found elsewhere in the genome. It is possible to perform this search offline as long as the BLAST database is available locally. Note that BLAST databases are on the order of hundreds of gigabytes in size, and the user may want to utilize multiple databases concurrently. In any case, we will need a system that can manage data from various sources. Sequences that are manually entered into the application represent a kind of data source, so this can be handled abstractly.
+
+Concretely, the application will have a menu that contains a list of data sources. One entry may be for mus musculus, and another entry for the DNA sequences that are currently being analyzed by the user. When overlaps are calculated for the Linking PCR tool, the entire list of data sources is searched. Highlighting a basepair sequence and globally searching for it will also search all data sources.

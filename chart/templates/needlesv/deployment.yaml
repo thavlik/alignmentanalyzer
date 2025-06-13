@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-needlesv
+spec:
+  replicas: {{ .Values.needlesv.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-needlesv
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-needlesv
+    spec:
+    {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.imagePullSecrets | indent 10 }}
+    {{- end }}
+      containers:
+      - name: server
+        imagePullPolicy: {{ .Values.needlesv.imagePullPolicy }}
+        image: {{ .Values.needlesv.image }}
+    {{- if .Values.needlesv.resources }}
+        resources:
+{{ toYaml .Values.needlesv.resources | indent 10 }}
+    {{- end }}
+        command:
+          - needlesv
+          - server
+        {{- if .Values.prometheus.enabled }}
+          - --metrics-port
+          - "2112"
+        {{- end }}
+        ports:
+        - containerPort: 80
+          name: http
+      {{- if .Values.prometheus.enabled }}
+        - containerPort: 2112
+          protocol: TCP
+          name: metrics
+      {{- end }}
+        env:
+        - name: CORS_HEADER
+          value: "{{ .Values.corsHeader }}"
+        - name: LOG_LEVEL
+          value: {{ .Values.needlesv.logLevel }}
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 80
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
