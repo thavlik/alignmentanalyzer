@@ -128,8 +128,9 @@ class _$AlignmentEntryCopyWithImpl<$Res>
 
 /// @nodoc
 mixin _$NeedleResult {
-  List<AlignmentEntry> get forward;
-  List<AlignmentEntry> get backward;
+  List<AlignmentEntry> get alignments;
+  String get stdout;
+  String get stderr;
 
   /// Create a copy of NeedleResult
   /// with the given fields replaced by the non-null parameter values.
@@ -144,20 +145,20 @@ mixin _$NeedleResult {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is NeedleResult &&
-            const DeepCollectionEquality().equals(other.forward, forward) &&
-            const DeepCollectionEquality().equals(other.backward, backward));
+            const DeepCollectionEquality()
+                .equals(other.alignments, alignments) &&
+            (identical(other.stdout, stdout) || other.stdout == stdout) &&
+            (identical(other.stderr, stderr) || other.stderr == stderr));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(forward),
-      const DeepCollectionEquality().hash(backward));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(alignments), stdout, stderr);
 
   @override
   String toString() {
-    return 'NeedleResult(forward: $forward, backward: $backward)';
+    return 'NeedleResult(alignments: $alignments, stdout: $stdout, stderr: $stderr)';
   }
 }
 
@@ -167,7 +168,7 @@ abstract mixin class $NeedleResultCopyWith<$Res> {
           NeedleResult value, $Res Function(NeedleResult) _then) =
       _$NeedleResultCopyWithImpl;
   @useResult
-  $Res call({List<AlignmentEntry> forward, List<AlignmentEntry> backward});
+  $Res call({List<AlignmentEntry> alignments, String stdout, String stderr});
 }
 
 /// @nodoc
@@ -182,18 +183,93 @@ class _$NeedleResultCopyWithImpl<$Res> implements $NeedleResultCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? alignments = null,
+    Object? stdout = null,
+    Object? stderr = null,
+  }) {
+    return _then(NeedleResult(
+      alignments: null == alignments
+          ? _self.alignments
+          : alignments // ignore: cast_nullable_to_non_nullable
+              as List<AlignmentEntry>,
+      stdout: null == stdout
+          ? _self.stdout
+          : stdout // ignore: cast_nullable_to_non_nullable
+              as String,
+      stderr: null == stderr
+          ? _self.stderr
+          : stderr // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+mixin _$NeedleOutput {
+  NeedleResult get forward;
+  NeedleResult get backward;
+
+  /// Create a copy of NeedleOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $NeedleOutputCopyWith<NeedleOutput> get copyWith =>
+      _$NeedleOutputCopyWithImpl<NeedleOutput>(
+          this as NeedleOutput, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is NeedleOutput &&
+            (identical(other.forward, forward) || other.forward == forward) &&
+            (identical(other.backward, backward) ||
+                other.backward == backward));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, forward, backward);
+
+  @override
+  String toString() {
+    return 'NeedleOutput(forward: $forward, backward: $backward)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $NeedleOutputCopyWith<$Res> {
+  factory $NeedleOutputCopyWith(
+          NeedleOutput value, $Res Function(NeedleOutput) _then) =
+      _$NeedleOutputCopyWithImpl;
+  @useResult
+  $Res call({NeedleResult forward, NeedleResult backward});
+}
+
+/// @nodoc
+class _$NeedleOutputCopyWithImpl<$Res> implements $NeedleOutputCopyWith<$Res> {
+  _$NeedleOutputCopyWithImpl(this._self, this._then);
+
+  final NeedleOutput _self;
+  final $Res Function(NeedleOutput) _then;
+
+  /// Create a copy of NeedleOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
     Object? forward = null,
     Object? backward = null,
   }) {
-    return _then(NeedleResult(
+    return _then(NeedleOutput(
       forward: null == forward
           ? _self.forward
           : forward // ignore: cast_nullable_to_non_nullable
-              as List<AlignmentEntry>,
+              as NeedleResult,
       backward: null == backward
           ? _self.backward
           : backward // ignore: cast_nullable_to_non_nullable
-              as List<AlignmentEntry>,
+              as NeedleResult,
     ));
   }
 }

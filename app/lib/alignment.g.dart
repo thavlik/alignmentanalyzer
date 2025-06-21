@@ -10,8 +10,8 @@ part of 'alignment.dart';
 const runNeedleProvider = RunNeedleFamily._();
 
 final class RunNeedleProvider extends $FunctionalProvider<
-        AsyncValue<NeedleResult>, FutureOr<NeedleResult>>
-    with $FutureModifier<NeedleResult>, $FutureProvider<NeedleResult> {
+        AsyncValue<NeedleOutput>, FutureOr<NeedleOutput>>
+    with $FutureModifier<NeedleOutput>, $FutureProvider<NeedleOutput> {
   const RunNeedleProvider._(
       {required RunNeedleFamily super.from,
       required (
@@ -39,12 +39,12 @@ final class RunNeedleProvider extends $FunctionalProvider<
 
   @$internal
   @override
-  $FutureProviderElement<NeedleResult> $createElement(
+  $FutureProviderElement<NeedleOutput> $createElement(
           $ProviderPointer pointer) =>
       $FutureProviderElement(pointer);
 
   @override
-  FutureOr<NeedleResult> create(Ref ref) {
+  FutureOr<NeedleOutput> create(Ref ref) {
     final argument = this.argument as (
       String,
       String,
@@ -67,12 +67,12 @@ final class RunNeedleProvider extends $FunctionalProvider<
   }
 }
 
-String _$runNeedleHash() => r'e500ae2c8f8152cf5fb90c0a27a9913c9ca936d4';
+String _$runNeedleHash() => r'5dd8e13262cadff68b84782e3799ec828e1186ef';
 
 final class RunNeedleFamily extends $Family
     with
         $FunctionalFamilyOverride<
-            FutureOr<NeedleResult>,
+            FutureOr<NeedleOutput>,
             (
               String,
               String,

@@ -51,22 +51,46 @@ class AlignmentEntry with _$AlignmentEntry {
 @JsonSerializable()
 class NeedleResult with _$NeedleResult {
   const NeedleResult({
+    required this.alignments,
+    required this.stdout,
+    required this.stderr,
+  });
+
+  @override
+  final List<AlignmentEntry> alignments;
+
+  @override
+  final String stdout;
+
+  @override
+  final String stderr;
+
+  factory NeedleResult.fromJson(Map<String, Object?> json) => NeedleResult(
+        alignments: (json['alignments'] as List<dynamic>)
+            .map((e) => AlignmentEntry.fromJson(e as Map<String, Object?>))
+            .toList(),
+        stdout: json['stdout'] as String,
+        stderr: json['stderr'] as String,
+      );
+}
+
+@freezed
+@JsonSerializable()
+class NeedleOutput with _$NeedleOutput {
+  const NeedleOutput({
     required this.forward,
     required this.backward,
   });
 
   @override
-  final List<AlignmentEntry> forward;
+  final NeedleResult forward;
 
   @override
-  final List<AlignmentEntry> backward;
+  final NeedleResult backward;
 
-  factory NeedleResult.fromJson(Map<String, Object?> json) => NeedleResult(
-        forward: (json['forward'] as List<dynamic>)
-            .map((e) => AlignmentEntry.fromJson(e as Map<String, Object?>))
-            .toList(),
-        backward: (json['backward'] as List<dynamic>)
-            .map((e) => AlignmentEntry.fromJson(e as Map<String, Object?>))
-            .toList(),
+  factory NeedleOutput.fromJson(Map<String, Object?> json) => NeedleOutput(
+        forward: NeedleResult.fromJson(json['forward'] as Map<String, Object?>),
+        backward:
+            NeedleResult.fromJson(json['backward'] as Map<String, Object?>),
       );
 }

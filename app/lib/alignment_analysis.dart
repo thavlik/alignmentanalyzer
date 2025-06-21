@@ -77,8 +77,8 @@ class _AlignmentAnalysisState extends State<AlignmentAnalysis> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...forwardAlignments.map((a) => _buildResult(context, a)),
-                  ...backwardAlignments.map(
+                  ...forwardAlignments.alignments.map((a) => _buildResult(context, a)),
+                  ...backwardAlignments.alignments.map(
                     (a) => _buildResult(context, a, backward: true),
                   ),
                 ],

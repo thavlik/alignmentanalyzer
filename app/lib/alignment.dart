@@ -6,7 +6,7 @@ import 'alignment_types.dart';
 part 'alignment.g.dart';
 
 @riverpod
-Future<NeedleResult> runNeedle(Ref ref, String a, String b) async {
+Future<NeedleOutput> runNeedle(Ref ref, String a, String b) async {
   final resp = await http.post(
     //Uri.parse('http://localhost:8080/align'),
     Uri.parse('https://api.beebs.dev/align'),
@@ -24,5 +24,5 @@ Future<NeedleResult> runNeedle(Ref ref, String a, String b) async {
   if (resp.statusCode != 200) {
     throw Exception('failed to run needle: ${resp.statusCode}');
   }
-  return NeedleResult.fromJson(jsonDecode(resp.body));
+  return NeedleOutput.fromJson(jsonDecode(resp.body));
 }

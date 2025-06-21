@@ -16,7 +16,7 @@ type Input struct {
 	SeqB      string  `json:"seqb"`      // the full second sequence
 }
 
-// A structure representing a single result from needle's output.
+// A structure that richly represents an alignment between two sequences.
 type Alignment struct {
 	StartA int64  `json:"startA"` // Start index of the first sequence
 	EndA   int64  `json:"endA"`   // End index of the first sequence
@@ -28,13 +28,20 @@ type Alignment struct {
 }
 
 // A structure that richly represents results from invoking needle.
-type Result struct {
-	Forward  []Alignment `json:"forward"`  // Alignments from both sequences forward
-	Backward []Alignment `json:"backward"` // Alignments with the second sequence reversed
+type NeedleResult struct {
+	Alignments []Alignment `json:"alignments"` // List of alignments found
+	Stdout     string      `json:"stdout"`     // Raw stdout from the needle command
+	Stderr     string      `json:"stderr"`     // Raw stderr from the needle command
+}
+
+// Output structure that contains results from running needle in both directions.
+type Output struct {
+	Forward  *NeedleResult `json:"forward"`
+	Backward *NeedleResult `json:"backward"`
 }
 
 // Run invokes needle with the provided configuration.
-func Run(ctx context.Context, input *Input) (*Result, error) {
+func Run(ctx context.Context, input *Input) (*Output, error) {
 	// Run needle with both sequences forwards.
 	forward, err := execNeedle(ctx, input)
 	if err != nil {
@@ -45,12 +52,12 @@ func Run(ctx context.Context, input *Input) (*Result, error) {
 	reversed := new(Input)
 	*reversed = *input // Copy the input
 	reversed.SeqB = reverse(input.SeqB)
-	backward, err := execNeedle(ctx, input)
+	backward, err := execNeedle(ctx, reversed)
 	if err != nil {
 		return nil, errors.Wrap(err, "exec needle")
 	}
 
-	return &Result{
+	return &Output{
 		Forward:  forward,
 		Backward: backward,
 	}, nil

@@ -13,7 +13,7 @@ import (
 )
 
 // execNeedle executes the needle command with the provided sequences.
-func execNeedle(ctx context.Context, input *Input) ([]Alignment, error) {
+func execNeedle(ctx context.Context, input *Input) (*NeedleResult, error) {
 	// Generate a random number to create unique temporary file names.
 	r, err := rand.Int(rand.Reader, big.NewInt(100000000))
 	if err != nil {
@@ -68,5 +68,9 @@ func execNeedle(ctx context.Context, input *Input) ([]Alignment, error) {
 		return nil, errors.Wrap(err, "decode result")
 	}
 
-	return result, nil
+	return &NeedleResult{
+		Alignments: result,
+		Stdout:     stdout.String(),
+		Stderr:     stderr.String(),
+	}, nil
 }
